@@ -1,0 +1,26 @@
+- name: Create a NIC
+  hosts: localhost
+  gather_facts: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+
+  vars: 
+    state_desired: present 
+
+  tasks:
+  - azure_rm_publicipaddress:
+      name: "{{ item }}-public-ip" 
+      resource_group: "{{ resource_group }}"
+      allocation_method: Static
+      state: "{{ state_desired }}"
+    with_items: "{{ public_ips }}"
+  
+  - azure_rm_networkinterface_facts:
+      name: "{{ item }}-pubic-ip"
+      resource_group: "{{ resource_group }}"
+    register: result
+    with_items: "{{ demo_hosts }}"
+  - debug:
+      var: result
+

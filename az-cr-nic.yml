@@ -1,0 +1,35 @@
+- name: Create a NIC
+  hosts: localhost
+  gather_facts: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+
+  vars: 
+    state_desired: present 
+
+  tasks:
+  - azure_rm_networkinterface:
+      name: "{{ item.name }}-eth0"
+      location: "{{ azure_region }}"
+      resource_group: "{{ resource_group }}"
+      virtual_network_name: "{{ virtual_network_name }}"
+      subnet_name: "{{ subnet_name }}"
+      public_ip_address_name: "{{ item.name_public_ip | default('')  }}"
+      security_group: ansible_demo
+
+      state: "{{ state_desired }}"
+    
+    with_items: "{{ demo_hosts }}"
+
+  
+#   - azure_rm_networkinterface_facts:
+#       name: "{{ item.name }}-eth0"
+#       resource_group: "{{ resource_group }}"
+#     register: result
+#     with_items: "{{ demo_hosts }}"
+#   - debug:
+#       var: result
+
+
+

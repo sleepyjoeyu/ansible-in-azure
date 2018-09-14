@@ -1,0 +1,24 @@
+---
+- name: Create a storage account
+  hosts: localhost
+  gather_facts: False
+  remote_user: devops
+  become: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+  vars:
+
+    storage_account_name: default_sg
+    location: eastus
+    account_type: Standard_RAGRS
+    state_desired: present
+
+  tasks:
+
+    - azure_rm_storageaccount:
+        resource_group: "{{ resource_group }}"
+        type: "{{ account_type }}"
+        # kind: Storage
+        name: "{{ storage_account_name }}"            
+        state: "{{ state_desired }}"

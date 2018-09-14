@@ -1,0 +1,54 @@
+---
+# 
+# Hosts Needed
+#
+demo_hosts:
+  - name: lbhost1
+    grptag: lb
+    name_public_ip: loadbalancer-public-ip
+  - name: bastion
+    grptag: infra
+    name_public_ip: bastion-public-ip
+  - name: web1
+    grptag: web
+  - name: web2
+    grptag: web
+# 1
+# Public IP addresses needed
+#
+public_ips:
+  - loadbalancer
+  - bastion
+#
+# Genaral
+#
+ssh_password_enabled: False 
+admin_username: devops
+# admin_password: RedHa7123!
+#
+# Default region for these plays
+# 
+azure_region: eastus
+os_type: Linux
+resource_group: BigDemo
+#
+# vm_size: Standard_DS11_v2
+#
+vm_size: Standard_D1_v2
+#
+# vm_size: Standard_D1
+#
+virtual_network_name: bigdemonet 
+subnet_name: bigdemosub
+CIDR: "10.3.0.0/16"
+subnet_cidr: "10.3.5.0/24"
+publisher: RedHat
+offer: RHEL
+# offer: "rhel-byos"
+version: latest
+sku: 7.4
+# 
+# Storage
+#
+account_type: Standard_RAGRS
+storage_account_name: ke9zdbigdemo

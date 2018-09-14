@@ -1,0 +1,28 @@
+---
+- name: Resource Group Creation
+  hosts: localhost
+  gather_facts: False
+  remote_user: devops
+  become: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+  vars:
+    state_desired: present
+    azure_region: "{{ azure_region }}"
+    resource_group: "{{ resource_group }}"
+    use_force: False
+  tasks:
+    - debug:
+        var: azure_region
+        verbosity: 2
+    - name: Create or remove the group {{ resource_group }}
+      azure_rm_resourcegroup:
+        location: "{{ azure_region }}"
+        name: "{{ resource_group }}"
+        state: "{{ state_desired }}"
+        force: "{{ use_force }}"
+#         client_id: "{{ client }}"
+#         secret: "{{ secret }}"
+#         subscription_id: "{{ sub }}"
+#         tenant: "{{ tenant }}"

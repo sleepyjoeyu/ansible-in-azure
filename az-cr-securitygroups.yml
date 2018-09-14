@@ -1,0 +1,46 @@
+---
+- name: Create security groups
+  hosts: localhost
+  gather_facts: False
+  vars_files:
+  - vars/main.yml
+  - vars/secrets.yml
+
+  vars:
+    security_group_name: andsible_demo
+
+  tasks:
+  - name: Create security group that allows SSH, MariaDB, and Webstuff
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group }}"
+      name: "{{ security_group_name }}"
+      purge_rules: yes
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+          source_address_prefix: "*"
+        - name: MariaDB
+          destination_port_range: 3306
+          protocol: Tcp
+          access: Allow
+          priority: 102
+          direction: Inbound
+          source_address_prefix: "*"
+        - name: http
+          destination_port_range: 80
+          access: Allow
+          protocol: Tcp
+          priority: 103
+          direction: Inbound
+          source_address_prefix: "*"
+        - name: https
+          destination_port_range: 443
+          access: Allow
+          protocol: Tcp
+          priority: 104
+          direction: Inbound
+          source_address_prefix: "*"

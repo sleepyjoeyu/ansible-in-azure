@@ -1,0 +1,38 @@
+---
+- name: Create My V-Network
+  hosts: localhost
+  gather_facts: False
+  remote_user: devops
+  become: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+  vars:
+    virt_network: "{{ virtual_network_name }}"   
+    address_prefix_cidr: "{{ subnet_cidr }}"
+    address_prefixes_cidr: "{{ CIDR }}"
+    state_desired: present
+    subnet: "{{ subnet_name }}"
+ 
+  tasks:
+
+   - debug: 
+       var: resource_group
+       verbosity: 2
+
+   - name: Provision Virtual Network {{ virt_network }}
+     azure_rm_virtualnetwork:
+       name: "{{ virt_network }}"
+       resource_group: "{{ resource_group }}"
+       address_prefixes_cidr:  "{{ address_prefixes_cidr }}"
+       state: "{{ state_desired }}"
+       resource_group: "{{ resource_group }}"
+
+   - name: Create Subnet {{ subnet }} 
+     azure_rm_subnet:
+       name: "{{ subnet }}"
+       virtual_network_name: "{{ virt_network }}"
+       resource_group: "{{ resource_group }}"
+       address_prefix_cidr: "{{ address_prefix_cidr }}"
+       state: "{{ state_desired }}"
+    

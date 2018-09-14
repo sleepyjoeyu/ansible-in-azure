@@ -1,0 +1,95 @@
+---
+- name: Create a VM
+  hosts: localhost
+  gather_facts: False
+  remote_user: devops
+  become: False
+  vars_files: 
+     - vars/main.yml
+     - vars/secrets.yml
+ 
+  vars:
+    desired_state: present
+    vm_name: changeme
+      
+  tasks:
+    - name: Provision instances 
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group }}"
+        # name: "{{ item }}"
+        name: "{{ item.name }}"
+        vm_size: "{{ vm_size }}"
+        tags: 
+          # type: "{{ item[:-3] }}"
+          type: "{{ item.grptag }}"
+          
+        network_interfaces:
+          - "{{item.name}}-eth0"
+        #   - eth1
+        #   - eth2
+        storage_account_name: "{{ storage_account_name }}"
+        admin_username: "{{ admin_username }}"
+        # admin_password: "{{ admin_password }}"
+        os_type: "{{ os_type }}"
+        ssh_password_enabled: "{{ ssh_password_enabled }}"
+
+        ssh_public_keys:
+        - path: /home/{{ admin_username }}/.ssh/authorized_keys
+          key_data: "{{ key_data }}"
+        started: True
+        state: "{{ desired_state }}"
+        public_ip_allocation_method: Dynamic
+        virtual_network_name: "{{ virtual_network_name }}"
+
+        image:
+          publisher: "{{ publisher }}"
+          offer: "{{ offer }}"
+          version: "{{ version }}"
+          sku: "{{ sku }}"
+  
+      with_items: "{{ demo_hosts }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#       register: provision_result
+# 
+# 
+#     - name: record the private address
+#       set_fact:
+#         privateipaddress: "{{ provision_result.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress }}"
+#       cacheable: True
+# 
+#     - debug:
+#         var: privateipaddress
+#  
+#     - name: ip address facts
+#       azure_rm_publicipaddress_facts:
+#         resource_group: "{{ resource_group }}"
+#         name: "{{ vm_name }}01"
+#       register: publicip
+# 
+#     - name: record the address
+#       set_fact:
+#         publicipaddress: "{{ publicip.ansible_facts.azure_publicipaddresses[0].properties.ipAddress }}"
+#       cacheable: True
+# 
+#     - name: see the output of the publicipaddress
+#       debug:
+#         var: publicipaddress 
+#       
+#     
