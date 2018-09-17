@@ -40,12 +40,19 @@ You should encyrpt the file using ansible-vault, or another method with which yo
 ## Using the playbooks
 
 To lay out the full sample infrastructure, use the following sequence in the command line, or with an Ansible Tower Workflow:
+
 ansible-playbook az-cr-resource-group.yml --ask-vault-pass
+
 ansible-playbook az-cr-network.yml --ask-vault-pass
+
 ansible-playbook az-cr-storage-acct.yml --ask-vault-pass
+
 ansible-playbook az-cr-securitygroups.yml --ask-vault-pass
+
 ansible-playbook az-cr-publicip.yml --ask-vault-pass
+
 ansible-playbook az-cr-nic.yml --ask-vault-pass
+
 ansible-playbook az-cr-instance.yml --ask-vault-pass
 
 ## Using Ansible Tower
