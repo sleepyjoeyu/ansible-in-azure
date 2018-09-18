@@ -10,7 +10,7 @@ The first thing to do is to create and connect to a service principal.
 
 * Login to the Azure-CLI
 
-> login -u
+> az login -u
 
 This will produce a login that will return a jason object that containes two items you will need to gather for your credentials:
 
