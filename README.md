@@ -62,3 +62,8 @@ Enter your credentials into a "Microsoft Azure Resource Manager" credentials obj
 ![Tower Credential File Entries](/images/tower-creds.png)
 
 The secret is entered in the above image but is shown as "Encrypted"
+
+## Credits
+
+Jason Horn did an excellent job of outlining the credentials process, and I lifted his technique here:
+[Jason Horn's Playbooks](https://github.com/hornjason/ansible-ocp-azure "Jason Horn's OCP Ansible Example")
