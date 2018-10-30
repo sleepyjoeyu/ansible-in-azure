@@ -63,6 +63,30 @@ Enter your credentials into a "Microsoft Azure Resource Manager" credentials obj
 
 The secret is entered in the above image but is shown as "Encrypted"
 
+## Azure SDK for Tower
+
+You may need to install the Azure Python SDK into Tower.   Here is how that is doen:
+
+Log into your tower instance, and gain root access.
+
+Open the Python VirtualEnv:
+
+| source /var/lib/awx/venv/ansible/bin/activate
+
+You will see a prompt with a (venv) prefix such as: (ansible) [root@tower-3 ~]#
+
+Now issue the following commands
+
+| umask 0022
+
+| pip install ansible[azure]
+
+| deactivate
+
+| exit
+
+Tower will now be able to use the APIs within the Azure Infrastructure
+
 ## Credits
 
 Jason Horn did an excellent job of outlining the credentials process, and I lifted his technique here:
