@@ -1,0 +1,17 @@
+---
+#- name: Create Resource
+#  include: az-cr-resource-group.yml
+- name: Create Network
+  include: az-cr-network.yml
+- name: Create Storage
+  include: az-cr-storage-acct.yml
+- name: Create Security Group
+  include: az-cr-securitygroups.yml
+- name: Create Public IP
+  include: az-cr-publicip.yml
+- name: Create Nic
+  include: az-cr-nic.yml
+- name: Create Instance
+  include: az-cr-instance.yml
+
+
