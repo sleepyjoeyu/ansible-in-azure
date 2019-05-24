@@ -1,6 +1,6 @@
 ---
-#- name: Create Resource
-#  include: az-cr-resource-group.yml
+- name: Create Resource
+  include: az-cr-resource-group.yml
 - name: Create Network
   include: az-cr-network.yml
 - name: Create Storage
