@@ -1,3 +1,9 @@
+
+## Most of the playbooks and the following content are clone from: https://github.com/jimbarlow/ansible-azure-provisioning. 
+## Demo/Learning purpose only.
+
+
+
 # ansible-azure-provisioning
 
 ## Authenticating to your Azure account for Ansible
